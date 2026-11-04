@@ -1,30 +1,28 @@
 # Programmatic SEO – Exercise Library
 
-A small demonstration project exploring how programmatic SEO can be used to generate structured landing pages from a dataset.
+A demonstration project exploring how programmatic SEO can be used to generate scalable, search-friendly landing pages from structured data.
 
 **Live demo:** https://exercise-library-demo.jakubea.workers.dev/
 
 ## Project overview
 
-The goal was to build an exercise library that automatically generates SEO-friendly pages based on structured exercise data.
+The project demonstrates how a structured dataset and reusable page templates can be combined to automatically generate multiple types of SEO-friendly landing pages.
 
-Instead of creating each page manually, the project uses a dataset and reusable HTML templates to generate multiple types of landing pages targeting different search intents.
+The exercise library uses exercise attributes such as muscle group, equipment and difficulty level to create pages targeting different search intents, rather than manually creating each page.
 
-## Page types
+## Generated page types
 
 The generator creates:
 
 - **Homepage** – overview of the exercise library.
 - **Muscle group pages** – exercises grouped by primary muscle group.
-- **Exercise detail pages** – individual pages with exercise descriptions, instructions and common mistakes.
-- **Equipment pages** – exercises grouped by equipment.
+- **Exercise detail pages** – individual exercise descriptions, instructions and common mistakes.
+- **Equipment pages** – exercises grouped by required equipment.
 - **Difficulty pages** – exercises grouped by difficulty level.
 
 ## Data structure
 
-The source dataset is stored in `exercises.csv`.
-
-Each row represents one exercise and contains the following attributes:
+The source dataset is stored in `exercises.csv`. Each row represents one exercise and contains the following attributes:
 
 | Attribute | Description |
 |---|---|
@@ -34,51 +32,51 @@ Each row represents one exercise and contains the following attributes:
 | `equipment` | Required equipment |
 | `level` | Difficulty level |
 | `type` | Exercise type |
-| `steps` | Instructions |
+| `steps` | Exercise instructions |
 | `mistakes` | Common mistakes |
 | `video` | Video reference |
 
-These attributes determine how exercises are grouped and which landing pages are generated.
+The attributes are used to group exercises, determine page relationships and generate relevant landing pages.
 
 ## SEO implementation
 
-The project demonstrates several core programmatic SEO principles:
+The project demonstrates several programmatic SEO concepts:
 
-- Structured data as the source of content.
-- Reusable page templates.
-- Consistent and descriptive URL structures.
-- Unique page titles and meta descriptions.
+- Structured data as the source of page content.
+- Reusable templates for consistent page generation.
+- Descriptive and hierarchical URL structures.
+- Dynamically generated page titles and meta descriptions.
 - Canonical URLs.
 - Breadcrumb navigation and structured data (`BreadcrumbList`, `HowTo`).
 - Internal linking between related pages.
 - XML sitemap generation.
 - `robots.txt` configuration.
-- Minimum record thresholds for generating equipment and difficulty pages to reduce thin content.
+- Minimum record thresholds for equipment and difficulty pages to help prevent thin content.
 
 ## How it works
 
-The project uses a Python script (`build.py`) to process the CSV dataset and generate static HTML pages.
+A Python script (`build.py`) processes the CSV dataset and generates a static website.
 
-To rebuild the website:
+To rebuild the website locally:
 
 ```bash
 python3 build.py
 ```
 
-The generated website is written to the `dist/` directory, including HTML pages, `sitemap.xml` and `robots.txt`.
+The generated files are written to the `dist/` directory, including HTML pages, `sitemap.xml` and `robots.txt`.
 
 ## Tools and technologies
 
-- Python – static page generation
+- Python – static site generation
 - CSV – structured source data
-- HTML – page templates and generated pages
+- HTML – generated pages
 - XML – sitemap
 
 ## Project approach
 
-I defined the dataset structure, page types, URL logic and SEO requirements. The implementation was developed with AI assistance, which I used to help build the generator and its supporting code.
+I designed the data structure, page types, URL logic and SEO requirements. I used AI assistance to implement the generator and supporting code, while focusing on the underlying programmatic SEO architecture and understanding how the different components work together.
 
-The main focus was understanding how structured data, templates and SEO rules work together to create scalable landing pages, rather than building a production-ready software application.
+The project is intended to demonstrate the SEO strategy, data modelling and page-generation logic behind a scalable pSEO website, rather than serve as a production-ready application.
 
 ---
 
