@@ -3,7 +3,7 @@ Usage: python3 build.py   (needs only Python 3, no installs)"""
 import csv, os, re, json, html, shutil
 from collections import defaultdict
 
-SITE = "https://exercise-library-demo.jakubea.workers.dev"   # <- replace with your Cloudflare Pages URL or domain
+SITE = "https://exercise-library-demo.jakubea.workers.dev"
 OUT, MIN_FACET = "dist", 2     # facet pages with fewer exercises are skipped (thin content)
 e = html.escape
 slug = lambda s: re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
