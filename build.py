@@ -130,3 +130,4 @@ open(f"{OUT}/sitemap.xml", "w").write('<?xml version="1.0" encoding="UTF-8"?><ur
                                       + "".join(f"<url><loc>{SITE}{u}</loc></url>" for u in pages) + "</urlset>")
 open(f"{OUT}/robots.txt", "w").write(f"User-agent: *\nAllow: /\nSitemap: {SITE}/sitemap.xml\n")
 print(f"Built {len(pages)} pages into {OUT}/")
+
