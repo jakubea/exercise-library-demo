@@ -1,3 +1,4 @@
+
 """Static site generator: exercises.csv -> dist/ (HTML, sitemap.xml, robots.txt).
 Usage: python3 build.py   (needs only Python 3, no installs)"""
 import csv, os, re, json, html, shutil
@@ -33,7 +34,8 @@ def write(path, title, desc, body, crumbs, extra=None):
     ld = [{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i + 1, "name": n, "item": SITE + u}
         for i, (n, u) in enumerate(crumbs)]}]
-    if extra: ld.append(extra)
+    if extra:
+        ld.append(extra)
     ld_html = "".join('<script type="application/ld+json">' + json.dumps(x) + "</script>" for x in ld)
     nav = " › ".join(f'<a href="{u}">{e(n)}</a>' for n, u in crumbs[:-1])
     nav += (" › " if len(crumbs) > 1 else "") + e(crumbs[-1][0])
@@ -54,24 +56,30 @@ def lst(xs):
 
 def facet_title(m, kind, v):
     M = m.title()
-    if kind == "level": return f"{v.title()} {M} Exercises"
-    if v == "bodyweight": return f"Bodyweight {M} Exercises (No Equipment)"
+    if kind == "level":
+        return f"{v.title()} {M} Exercises"
+    if v == "bodyweight":
+        return f"Bodyweight {M} Exercises (No Equipment)"
     return f"{M} Exercises with {EQ.get(v, v)}"
 
 shutil.rmtree(OUT, ignore_errors=True)
 by_m = defaultdict(list)
-for r in rows: by_m[r["muscle"]].append(r)
+for r in rows:
+    by_m[r["muscle"]].append(r)
 
 for m, xs in by_m.items():
     ms, M = slug(m), m.title()
     fs = []
     for kind in ("equipment", "level"):
         g = defaultdict(list)
-        for x in xs: g[x[kind]].append(x)
+        for x in xs:
+            g[x[kind]].append(x)
         for v, ys in g.items():
             if len(ys) >= MIN_FACET:
                 fs.append((kind, v, facet_title(m, kind, v), f"exercises/{ms}/{kind}/{slug(v)}/", ys))
+
     fpaths = {(k, v): p for k, v, t, p, _ in fs}
+
     for k, v, t, p, ys in fs:
         names = ", ".join(y["name"] for y in ys[:3])
 
@@ -81,12 +89,16 @@ for m, xs in by_m.items():
             desc = f"{len(ys)} {v} {m} exercises, including {names}. Explore step-by-step instructions for each exercise."
 
         write(p, f"{t} | Exercise Library", desc,
+              f"<h1>{e(t)}</h1>{lst(ys)}<p><a href='/exercises/{ms}/'>All {e(m)} exercises</a></p>",
+              [("Home", "/"), (f"{M} exercises", f"/exercises/{ms}/"), (t, "/" + p)])
+
     links = "".join(f'<li><a href="/{p}">{e(t)}</a></li>' for _, _, t, p, _ in fs)
     write(f"exercises/{ms}/", f"{M} Exercises: Instructions and Variations | Exercise Library",
           f"{len(xs)} {m} exercises with step-by-step instructions, common mistakes and equipment options.",
           f"<h1>{M} Exercises</h1><p>{len(xs)} exercises for the {e(m)}.</p>"
           + (f"<h2>Narrow it down</h2><ul>{links}</ul>" if links else "") + "<h2>All exercises</h2>" + lst(xs),
           [("Home", "/"), (f"{M} exercises", f"/exercises/{ms}/")])
+
     for i, r in enumerate(xs):
         rel = [xs[(i + k) % len(xs)] for k in range(1, min(4, len(xs)))]
         eqtxt = "It needs no equipment." if r["equipment"] == "bodyweight" else f"It uses {r['equipment']}."
