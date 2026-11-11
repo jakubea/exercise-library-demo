@@ -74,9 +74,13 @@ for m, xs in by_m.items():
     fpaths = {(k, v): p for k, v, t, p, _ in fs}
     for k, v, t, p, ys in fs:
         names = ", ".join(y["name"] for y in ys[:3])
-        write(p, f"{t} | Exercise Library", f"{len(ys)} {m} exercises including {names}, with step-by-step instructions.",
-              f"<h1>{e(t)}</h1>{lst(ys)}<p><a href='/exercises/{ms}/'>All {e(m)} exercises</a></p>",
-              [("Home", "/"), (f"{M} exercises", f"/exercises/{ms}/"), (t, "/" + p)])
+
+        if k == "equipment":
+            desc = f"{len(ys)} {m} exercises using {EQ.get(v, v)}, including {names}. Explore step-by-step instructions for each exercise."
+        else:
+            desc = f"{len(ys)} {v} {m} exercises, including {names}. Explore step-by-step instructions for each exercise."
+
+        write(p, f"{t} | Exercise Library", desc,
     links = "".join(f'<li><a href="/{p}">{e(t)}</a></li>' for _, _, t, p, _ in fs)
     write(f"exercises/{ms}/", f"{M} Exercises: Instructions and Variations | Exercise Library",
           f"{len(xs)} {m} exercises with step-by-step instructions, common mistakes and equipment options.",
